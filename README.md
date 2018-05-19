@@ -14,7 +14,7 @@ It will then write the converted files to the DESTINATION directory using the sa
 The container for the video files will also be converted to mp4 while the video stream is just copied over
 
 The full ffmpeg command is as follow:
-ffmpeg -stats original- video.mp4 -c:v copy -acodec ac3 -b:a 640k -ac 6 -c:s copy -f mp4 converted-video.mp4
+ffmpeg -stats original- video.mp4 -c:v copy -acodec ac3 -b:a 640k -ac 6 -f mp4 converted-video.mp4
 
 USAGE:
 docker run --rm -v /SOURCE:/media/convert -v /DESTINATION:/media/done een625/convert2ac3
