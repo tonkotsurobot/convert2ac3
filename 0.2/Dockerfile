@@ -4,4 +4,4 @@ RUN apt-get install -y python
 RUN mkdir /media/convert /media/done
 COPY convert.py /tmp/workdir/
 ENTRYPOINT ["python","convert.py"]
-CMD ["/media/convert/", "/media/done/"]
+CMD ["/media/convert", "/media/done"]
