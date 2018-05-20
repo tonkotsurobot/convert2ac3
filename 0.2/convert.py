@@ -61,7 +61,7 @@ f.close()
 2. For each line in dir-file:
   if it's .avi, .mp4, .mkv, convert using ffmpeg to new location.
   if it's not copy as is to new location
-
+t
 """
 
 
