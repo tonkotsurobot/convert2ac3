@@ -1,88 +1,103 @@
-import os, sys, subprocess
+
+"""
+1. List files in source directory into a file
+
+2. For each file:
+  if it's .avi, .mp4, .mkv, convert using ffmpeg to new location.
+  if it's not copy as is to new location
+
+3. (optional) delete original files if successful
+"""
+
+
+
+import os
+import sys
+import subprocess
+
 
 command1 = "ffmpeg -stats -i "
 command2 = "-c:v copy -acodec ac3 -b:a 640k -ac 6 -c:s copy -f mp4"
 sourcedir = sys.argv[1]
 targetdir = sys.argv[2]
+filetype = ['avi', 'mkv', 'mp4']
+tempfile = targetdir + '/' + "list.txt"
 
 
-def convert2ac3(file):
-  """convert "abs-file" into ac3 with mp4 container"""
-  subprocess.call(['ffmpeg', '-stats', '-i', file, '-c:v', 'copy', '-acodec', 'ac3', '-b:a', '640k', '-ac', '6', '-f', 'mp4', target-dir + file.split('/',2)[2] ])
+#convert video "file" to have ac3 5.1 audio and mp4 container#
+def convert(file):
+    start_pos = file.find('/',1)
+    destination = targetdir + file[start_pos:]
+    end_pos = file.rfind('/')
+    filepath = file[start_pos:end_pos]
+
+    #create target directory as needed
+    if ( filepath != ''):
+        print "creating directory " + filepath
+        destdir = targetdir + filepath + '/'
+        subprocess.call(["mkdir", "-p", destdir])
+
+    print "Converting to " + destination
+    subprocess.call(['ffmpeg', '-stats', '-i', file, '-c:v', 'copy', \
+          '-acodec', 'ac3', '-b:a', '640k', '-ac', '6', '-f', 'mp4', \
+          destination ])
+
+#copy "file" to "targetdir" preserving file path relative to sourcedir
+def copy(file):
+    start_pos = file.find('/',1)
+    end_pos = file.rfind('/')
+    filepath = file[start_pos:end_pos]
+    #create target directory as needed
+    destdir = targetdir + filepath + '/'
+    if ( filepath != ''):
+        print "creating directory " + filepath
+        subprocess.call(["mkdir", "-p", destdir])
+    
+    #remove newline character
+    file = file[:-1]
+    
+    print "Copying " + file + " to " + destdir
+    subprocess.call(['cp', file, destdir])
 
 
-
+#Recursively list files in "directory" into "file" 
 def listdir2file(directory, file):
-  """List files in the "directory" into "file" and 
-     recursively call listdir2file for subsequent 
-     directories recursively"""
-  for filename in os.listdir(directory):
-    filename = directory + "/" + filename  
-    if os.path.isfile(filename):
-      file.write("%s\r\n" % filename)
-    else:
-      listdir2file(filename, file)
+    for filename in os.listdir(directory):
+        filename = directory + "/" + filename  
+        if os.path.isfile(filename):
+            file.write("%s\n" % filename)
+        else:
+            listdir2file(filename, file)
+
 
       
+#MAIN PROGRAM
+#prepare temporary file in target directory
+f=open(tempfile, "w+")
 
-f=open(targetdir + "list.txt", "w+")
-
+#list all files in source directory
 listdir2file(sourcedir, f)
 
-f.close()
-
-f=open(targetdir + "list.txt", "r")
-
+#either copy or process the files listed
+f.seek(0)
 lines = f.readlines()
+count = 1
+for filename in lines:
+    print ("File %d" % count)
+    count = count + 1
+    extension = filename[filename.rfind('.'):]
+    if any(x in extension for x in filetype):
+        convert(filename)
+    else:
+        copy(filename)
+    print "END\n\n"
 
-for item in lines:
-  #if item ends in .mp4 .mkv .avi, convert
-  print item
-
+#clean up
 f.close()
+subprocess.call(['/bin/rm', tempfile])
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-"""
-1. List files in source directory, and write the full path into a dir-file
-
-2. For each line in dir-file:
-  if it's .avi, .mp4, .mkv, convert using ffmpeg to new location.
-  if it's not copy as is to new location
-
-"""
-
-
-
-"""
-os.path.isfile("bob.txt") # Does bob.txt exist?  Is it a file, or a directory?
-os.path.isdir("bob")
-f=open("guru99.txt", "a+")
-f.write("Appended line %d\r\n" % (i+1))
-f.close()
-
-tim.split(':', 1) # split() only once
-['16', '30:10']
-f=open("/rootlist.txt", "a+")
-
-""" 
-
-
-"""
-for filename in os.listdir(sys.argv[1]):
-  subprocess.call(['ffmpeg', '-stats', '-i', sys.argv[1] + filename, '-c:v', 'copy', '-acodec', 'ac3', '-b:a', '640k', '-ac', '6', '-f', 'mp4', sys.argv[2] + filename])
-  #subprocess.call(['/bin/rm', sys.argv[1] + filename])
-"""
 
