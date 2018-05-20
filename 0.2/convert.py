@@ -63,11 +63,12 @@ def copy(file):
 #Recursively list files in "directory" into "file" 
 def listdir2file(directory, file):
     for filename in os.listdir(directory):
-        filename = directory + "/" + filename  
-        if os.path.isfile(filename):
-            file.write("%s\n" % filename)
-        else:
-            listdir2file(filename, file)
+        if (filename[0] != '.'):
+            filename = directory + "/" + filename  
+            if os.path.isfile(filename):
+                file.write("%s\n" % filename)
+            else:
+                listdir2file(filename, file)
 
 
       
