@@ -23,4 +23,8 @@ docker run --rm -v /SOURCE:/media/convert -v /DESTINATION:/media/done een625/con
 
 v0.1: Original files are not deleted. Only files in the base directory will be actioned upon. ffmpeg will try to convert all files regardless of type
 
+
+USAGE:
+docker run --rm -v /SOURCE:/convert -v /DESTINATION:/done een625/convert2ac3
+
 v0.2: Original files are note deleted. All files of type .mp4 .mkv .avi will be processed recursively
