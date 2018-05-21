@@ -26,6 +26,8 @@ tempfile = targetdir + '/' + "list.txt"
 
 #convert video "file" to have ac3 5.1 audio and mp4 container#
 def convert(file):
+    #remove newline character
+    file = file[:-1]
     start_pos = file.find('/',1)
     destination = targetdir + file[start_pos:]
     end_pos = file.rfind('/')
