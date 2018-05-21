@@ -28,6 +28,9 @@ tempfile = targetdir + '/' + "list.txt"
 def convert(file):
     #remove newline character
     file = file[:-1]
+
+    #set the destination of the converted file
+    #need to rename the extension to .mp4
     start_pos = file.find('/',1)
     destination = targetdir + file[start_pos:]
     end_pos = file.rfind('/')
