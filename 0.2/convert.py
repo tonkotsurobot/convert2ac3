@@ -30,9 +30,14 @@ def convert(file):
     file = file[:-1]
 
     #set the destination of the converted file
-    #need to rename the extension to .mp4
     start_pos = file.find('/',1)
     destination = targetdir + file[start_pos:]
+    
+    #change extension to .mp4    
+    occurence = destination.rfind(destination[-4:])
+    destination = destination[:occurence] + ".mp4" 
+    
+    #determine target relative directory
     end_pos = file.rfind('/')
     filepath = file[start_pos:end_pos]
 
