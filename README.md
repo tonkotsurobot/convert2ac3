@@ -2,12 +2,11 @@
 Convert the audio stream in movies to AC3. Based on jrottenberg/ffmpeg
 
 
-###WORK IN PROGRESS###
 
 This project uses jrottenberg/ffmpeg as a base image.
 It does the following:
 
--It will convert all files in the SOURCE directory (non recursive) with ffmpeg to change their audio stream to AC3 5.1
+-It will convert all files in the SOURCE directory with ffmpeg to change their audio stream to AC3 5.1
 
 -It will then write the converted files to the DESTINATION directory using the same name
 
