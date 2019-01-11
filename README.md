@@ -2,7 +2,7 @@
 Convert the audio stream in movies to AC3. Based on jrottenberg/ffmpeg
 
 ### WHY?
-- I have a Sonos playbar at home and it only plays 5.1 stream if it is encoded in AC3 format.
+- I have a Sonos playbar 5.1 setup at home and it only plays 5.1 stream if it is encoded in AC3 format.
 Thus any digital movies I have need to converted to this format while preserving the video stream.
 Rather than manually converting each file, I just dump all the files in the "SOURCE" folder and run an ephemeral ffmpeg container to convert them
 - mp4 container for movies are also more media player friendly
@@ -25,6 +25,9 @@ ffmpeg -stats original- video.mp4 -c:v copy -acodec ac3 -b:a 640k -ac 6 -f mp4 c
 
 
 ### USAGE:
+/media/convert and /media/done are the source and destination directory of your video files respectively
+
+
 docker run --rm -v /SOURCE:/media/convert -v /DESTINATION:/media/done een625/convert2ac3
 
 ### Version history
