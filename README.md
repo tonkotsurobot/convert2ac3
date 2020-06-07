@@ -1,4 +1,5 @@
 # convert2ac3
+This is used to build a docker image (een625/convert2ac3) that does the following:
 Convert the audio stream in movies to AC3. Based on jrottenberg/ffmpeg
 
 ### WHY?
