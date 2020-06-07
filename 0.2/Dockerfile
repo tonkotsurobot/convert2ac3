@@ -1,5 +1,6 @@
 FROM jrottenberg/ffmpeg
 MAINTAINER Edward Mario (edward.mario@gmail.com)
+RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get install -y python
 RUN mkdir /convert /done
 COPY convert.py /tmp/workdir/
